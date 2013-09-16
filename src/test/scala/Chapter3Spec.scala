@@ -10,7 +10,7 @@ class Chapter3Spec extends Specification {
   // exercise 1
   "matchExample" should {
     "return the correct answer to the question" in {
-      val x : Int = List(1, 2, 3, 4, 5) match {
+      val x: Int = List(1, 2, 3, 4, 5) match {
         case Cons(x, Cons(2, Cons(4, _))) => x
         case Nil => 42
         case Cons(x, Cons(y, Cons(3, Cons(4, _)))) => x + y
@@ -53,7 +53,7 @@ class Chapter3Spec extends Specification {
       drop(List(2), 2) must_== Nil
     }
     "return nil if list is exact length" in {
-      drop(List(1,2), 2) must_== Nil
+      drop(List(1, 2), 2) must_== Nil
     }
   }
 
@@ -63,7 +63,7 @@ class Chapter3Spec extends Specification {
       dropWhile(List(5, 6, 7, 8, 9))(_ <= 7) must_== List(8, 9)
     }
     "return nil if list is nil" in {
-      dropWhile(Nil)((_:Int) <= 7) must_== Nil
+      dropWhile(Nil)((_: Int) <= 7) must_== Nil
     }
     "return nil if all is dropped" in {
       dropWhile(List(5, 6, 7))(_ <= 7) must_== Nil
@@ -90,7 +90,7 @@ class Chapter3Spec extends Specification {
   // exercise 9
   "lengthh" should {
     "return the length of the list" in {
-      lengthh(List('g', 'e', 'z' ,'g')) must_== 4
+      lengthh(List('g', 'e', 'z', 'g')) must_== 4
     }
     "return 0 for an empty list" in {
       lengthh(Nil) must_== 0
@@ -145,6 +145,75 @@ class Chapter3Spec extends Specification {
   "flatten" should {
     "flatten lists" in {
       flatten(List(List(1, 2), List(3, 4, 5), List(6))) must_== List(1, 2, 3, 4, 5, 6)
+    }
+  }
+
+  // exercise 16
+  "addOneToEachElement" should {
+    "add one to each element" in {
+      addOneToEachElement(List(4, 6, 2, 1)) must_== List(5, 7, 3, 2)
+    }
+  }
+
+  // exercise 17
+  "eachElementToString" should {
+    "turn each element into a String" in {
+      eachElementToString(List(3.4, 5.7, 1.0)) must_== List("3.4", "5.7", "1.0")
+    }
+  }
+
+  // exercise 18
+  "map" should {
+    "apply a function to each element in a list" in {
+      mapp(List(4, 6, 2, 1))(_ + 1) must_== List(5, 7, 3, 2)
+    }
+  }
+
+  // exercise 19
+  "filter" should {
+    "remove all elements that do not satisfy a condition" in {
+      filter(List(1, 2, 3, 5, 6, 7))(_ % 2 == 0) must_== List(2, 6)
+    }
+  }
+
+  // exercise 20
+  "flatMap" should {
+    "map a result and flatten it into a list" in {
+      flatMap(List(1, 2, 3))(i => List(i, i)) must_== List(1, 1, 2, 2, 3, 3)
+    }
+  }
+
+  // exercise 21
+  "filterFM" should {
+    "remove all elements that do not satisfy a condition" in {
+      filterFM(List(1, 2, 3, 5, 6, 7))(_ % 2 == 0) must_== List(2, 6)
+    }
+  }
+
+  // exercise 22
+  "addCorresponding" should {
+    "add corresponding elements" in {
+      addCorresponding(List(1, 2, 3))(List(4, 5, 6)) must_== List(5, 7, 9)
+    }
+  }
+
+  // exercise 23
+  "combine" should {
+    "combine corresponding elements" in {
+      combine(List(1, 2, 3))(List(4, 5, 6))(_ + _) must_== List(5, 7, 9)
+    }
+  }
+
+  // exercise 24
+  "hasSubsequence" should {
+    "determine if the second list is a subsequence of the first list" in {
+      hasSubsequence(List(1, 2, 3, 4), List(2, 3)) must_== true
+    }
+    "return false if this is not the case" in {
+      hasSubsequence(List(1, 2, 3, 4), List(3, 4, 5)) must_== false
+    }
+    "return true if this is the case" in {
+      hasSubsequence(List(1, 2, 1, 2, 3), List(1, 2, 3)) must_== true
     }
   }
 }
