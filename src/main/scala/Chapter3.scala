@@ -168,21 +168,31 @@ object Chapter3 {
 
   // exercise 24
   def hasSubsequence[A](l : List[A], sub: List[A]) : Boolean = {
+    // for each of the remaining subs:
+    // - checks if the first element of the sub equals x
+    // - if so, adds the remainder of the sub to acc
+    // - if the remainder is nil, sets foundMatch to true
     @tailrec
-    def go(remainingList: List[A], remainingSub: List[A], sub: List[A]) : Boolean = {
-      (remainingList, remainingSub, sub) match {
-        case (_, _, Nil) => true // just to get rid of the warning - this always comes down to the second case as well
-        case (_, Nil, _) => true
-        case (Nil, Cons(x, xs), _) => false
-        case (Cons(x, xs), Cons(y, ys), Cons(z, zs)) =>
-          val (newxs, newys, newzs) =
-            if (x == y) (xs, ys, sub)
-            else if (x == z) (xs, zs, sub)
-            else (xs, sub, sub)
-          go(newxs, newys, newzs)
+    def filterSubs(x: A, remainingSubs: List[List[A]], acc: List[List[A]] = Nil, foundMatch : Boolean = false) : (List[List[A]], Boolean) =
+      remainingSubs match {
+        case Nil => (acc, foundMatch)
+        case Cons(Cons(y, ys), yss) if (x == y) => filterSubs(x, yss, Cons(ys, acc), foundMatch || (ys == Nil))
+        case Cons(Cons(y, _), yss) if (x != y) => filterSubs(x, yss, acc, foundMatch)
+      }
+
+    @tailrec
+    def go(remainingList: List[A], remainingSubs: List[List[A]], sub: List[A]) : Boolean = {
+      (remainingList, remainingSubs) match {
+        case (Nil, _) => false
+        case (Cons(x, xs), yss) =>
+          filterSubs(x, remainingSubs) match {
+            case (_, true) => true
+            case (newRemainingSubs, false) => go(xs, Cons(sub, newRemainingSubs), sub)
+          }
       }
     }
-    go(l, sub, sub)
+
+    (sub == Nil) || go(l, Cons(sub, Nil), sub)
   }
 
 }

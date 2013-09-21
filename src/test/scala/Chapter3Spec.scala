@@ -215,5 +215,14 @@ class Chapter3Spec extends Specification {
     "return true if this is the case" in {
       hasSubsequence(List(1, 2, 1, 2, 3), List(1, 2, 3)) must_== true
     }
+    "return true if this is the case" in {
+      hasSubsequence(List(1, 1, 1, 2), List(1, 1, 2)) must_== true
+    }
+    "return true if subsequence is empty" in {
+      hasSubsequence(Nil ,Nil) must_== true
+    }
+    "return false if list is empty" in {
+      hasSubsequence(Nil, List(1)) must_== false
+    }
   }
 }
