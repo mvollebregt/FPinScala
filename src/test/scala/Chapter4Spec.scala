@@ -1,5 +1,7 @@
 import org.specs2.mutable._
 
+import Chapter4._
+
 class Chapter4Spec extends Specification {
 
   def fsome(x: Int) = MySome(x+1)
@@ -53,6 +55,15 @@ class Chapter4Spec extends Specification {
     }
     "return none if none" in {
       MyNone filter (_ => true) must_== MyNone
+    }
+  }
+
+  "variance" should {
+    "return None for empty Seq" in {
+      variance(Seq()) must_== None
+    }
+    "return variance for 2 values" in {
+      variance(Seq(1, 2)) must_== Some(.25)
     }
   }
 }

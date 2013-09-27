@@ -1,4 +1,3 @@
-
 trait MyOption[+A] {
 
   def map[B](f: A => B): MyOption[B] = this match {
@@ -18,3 +17,18 @@ trait MyOption[+A] {
 
 case class MySome[+A](get: A) extends MyOption[A]
 case object MyNone extends MyOption[Nothing]
+
+
+object Chapter4 {
+
+  def variance(xs: Seq[Double]): Option[Double] =
+    mean(xs) flatMap { m =>
+      mean(xs map (x => math.pow(x - m, 2)))
+    }
+
+  def mean(xs: Seq[Double]) : Option[Double] = xs match {
+    case Seq() => None
+    case xs => Some(xs.sum / xs.length)
+  }
+
+}
