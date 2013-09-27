@@ -53,7 +53,7 @@ object Chapter3Tree {
 
   def depth[T](t: Tree[T]): Int = fold[T, Int](t)(_ => 1, (a, b) => 1 + (a max b))
 
-  def mapp[T](t: Tree[T])(f: T => T) = fold[T, Tree[T]](x => Leaf(f(x)), (a, b) => Branch(a, b))
+  def mapp[T](t: Tree[T])(f: T => T) = fold[T, Tree[T]](t)(x => Leaf(f(x)), (a, b) => Branch(a, b))
 
 
 }
